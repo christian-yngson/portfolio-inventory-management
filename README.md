@@ -1,36 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio Inventory Management
+
+This is a **Next.js 16+** project with **TypeScript**, **Material UI v7**, and **Tailwind CSS**, built to showcase a professional **fullstack inventory management dashboard**.
+
+It demonstrates senior-level **fullstack development skills**, including database integration, authentication, role-based access control (RBAC), reusable components, and CI/CD-ready project structure.
+
+---
+
+## Features
+
+### Core Features
+
+- Add / Edit / Delete products
+- Track stock quantity
+- Manage vendors & suppliers
+- Record sales & purchases
+- Low-stock alerts
+- Search and filtering
+
+### Authentication & Authorization
+
+- Simple credentials authentication (NextAuth.js)
+- Role-Based Access Control (RBAC) with roles: `admin`, `manager`, `staff`
+- Admin can manage roles and permissions
+- Protected route groups for dashboard pages
+
+### Dashboard & Analytics
+
+- Charts using **Recharts / Chart.js**
+- Inventory value over time
+- Best-selling items (in the future)
+- Stock movement trends (in the future)
+
+---
+
+## Tech Stack
+
+- **Frontend:** Next.js (App Router, TypeScript), Material UI v7, Tailwind CSS
+- **Backend:** Node.js API routes with Next.js, PostgreSQL database
+- **Authentication:** NextAuth.js with credentials provider + JWT
+- **Hosting / PaaS:** Vercel (frontend), Render or Vercel serverless for real-time socket features (in the future)
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### 1. Install dependencies
+
+```bash
+pnpm install
+```
+
+### 2. Run the local development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Routing
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+All routing is centralized in `@/lib/constants/routes/routes.ts` to maintain consistency and type safety.
+Nested routes, child routes, and dynamic parameters are supported via functions.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Example usage:
 
-## Learn More
+```typescript
+Routes.protected.dashboard.root(); // "/dashboard"
+Routes.protected.dashboard.inventory("123"); // "/dashboard/inventory/123"
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Testing
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This project uses Vitest for testing, along with React Testing Library and jest-dom for component assertions.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Example test:
 
-## Deploy on Vercel
+```jsx
+import { describe, it, expect } from "vitest";
+import Routes from "./routes";
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+import { describe, it, expect } from "vitest";
+import Routes from "./routes";
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+describe("Routes", () => {
+  it('should have a home route that returns "/"', () => {
+    expect(Routes.home()).toBe("/");
+  });
+
+  it('should have a login route that returns "/login"', () => {
+    expect(Routes.login()).toBe("/login");
+  });
+
+  describe("Protected routes", () => {
+    describe("Dashboard routes", () => {
+      it('should have a dashboard root route that returns "/dashboard"', () => {
+        expect(Routes.protected.dashboard.root()).toBe("/dashboard");
+      });
+    });
+  });
+});
+```
