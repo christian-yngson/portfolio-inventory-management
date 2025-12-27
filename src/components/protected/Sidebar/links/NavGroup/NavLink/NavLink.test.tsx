@@ -76,4 +76,12 @@ describe("NavLink", () => {
 
     expect(useNavigate).toHaveBeenCalledWith(testRoute);
   });
+
+  it("renders ListItemButton with correct role", () => {
+    mockedUseIsActive.mockReturnValue(false);
+
+    render(<NavLink label="Dashboard" route="/dashboard" icon={mockIcon} />);
+
+    expect(screen.getByRole("button")).toBeInTheDocument();
+  });
 });

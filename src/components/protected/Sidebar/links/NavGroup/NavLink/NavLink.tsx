@@ -33,8 +33,21 @@ function NavLink({ label, route, icon }: Props) {
         },
       }}
     >
-      <ListItemIcon>{icon}</ListItemIcon>
-      <ListItemText primary={label} />
+      <ListItemIcon
+        sx={{
+          color: (theme) =>
+            isActive ? alpha(theme.palette.primary.main, 0.8) : undefined,
+        }}
+      >
+        {icon}
+      </ListItemIcon>
+      <ListItemText
+        primary={label}
+        sx={{
+          color: (theme) =>
+            isActive ? alpha(theme.palette.primary.main, 0.8) : undefined,
+        }}
+      />
     </ListItemButton>
   );
 }
