@@ -16,5 +16,15 @@ describe("Routes", () => {
         expect(Routes.protected.dashboard.root()).toBe("/dashboard");
       });
     });
+
+    describe("Products routes", () => {
+      it('should have a products root route that returns "/products"', () => {
+        expect(Routes.protected.products.root()).toBe("/products");
+      });
+
+      it('should have a products add route that returns "/products/add"', () => {
+        expect(Routes.protected.products.add()).toBe("/products/add");
+      });
+    });
   });
 });

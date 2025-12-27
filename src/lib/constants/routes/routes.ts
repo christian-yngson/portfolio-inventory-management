@@ -5,6 +5,10 @@ const Routes = {
     dashboard: {
       root: () => "/dashboard",
     },
+    products: {
+      root: () => "/products",
+      add: () => "/products/add",
+    },
   },
 } as const;
 
