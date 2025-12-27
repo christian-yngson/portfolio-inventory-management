@@ -1,5 +1,3 @@
-"use client";
-
 import ListSubheader from "@mui/material/ListSubheader";
 import List from "@mui/material/List";
 import NavLink from "./NavLink";
