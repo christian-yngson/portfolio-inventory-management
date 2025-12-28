@@ -12,9 +12,7 @@ interface Props {
 
 function SidebarDrawer({ children }: Props) {
   const { expanded, toggleSidebar } = useSidebar();
-  const isMediumOrGreater = useMediaQuery((theme) =>
-    theme.breakpoints.up("md")
-  );
+  const isPhone = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
   const width = Ui.sidebarWidth;
   return (
@@ -29,8 +27,12 @@ function SidebarDrawer({ children }: Props) {
           boxSizing: "border-box",
           transition: "width 0.3s",
         },
+        position: {
+          xs: "fixed",
+          md: "relative",
+        },
       }}
-      variant={isMediumOrGreater ? "persistent" : "temporary"}
+      variant={isPhone ? "temporary" : "persistent"}
       anchor="left"
       open={expanded}
       aria-label="sidebar navigation"
