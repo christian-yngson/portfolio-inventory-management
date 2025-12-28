@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import TotalsSection from "@/components/protected/dashboard/TotalsSection";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -6,7 +7,7 @@ export const metadata: Metadata = {
 };
 
 function Dashboardpage() {
-  return <div>Dashboard Page</div>;
+  return <TotalsSection />;
 }
 
 export default Dashboardpage;
