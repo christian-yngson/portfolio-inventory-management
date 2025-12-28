@@ -1,50 +1,87 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import MainContentContainer from "./MainContentContainer";
-import * as SidebarHooks from "../SidebarProvider/hooks";
+import { useSidebar } from "../SidebarProvider/hooks";
+import * as useMediaQueryModule from "@mui/material/useMediaQuery";
 
 vi.mock("../SidebarProvider/hooks");
+vi.mock("@mui/material/useMediaQuery");
+vi.mock("@/lib/constants/ui", () => ({
+  default: { sidebarWidth: 250 },
+}));
+
+const mockUseSidebar = vi.mocked(useSidebar);
+const mockUseMediaQuery = vi.mocked(useMediaQueryModule.default);
 
 describe("MainContentContainer", () => {
-  it("renders children correctly", () => {
-    vi.mocked(SidebarHooks.useSidebar).mockReturnValue({
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it("renders children", () => {
+    mockUseSidebar.mockReturnValue({
       expanded: true,
-    } as never);
-    render(<MainContentContainer>Test Content</MainContentContainer>);
+      toggleSidebar: vi.fn(),
+    });
+    mockUseMediaQuery.mockReturnValue(false);
+
+    render(
+      <MainContentContainer>
+        <div>Test Content</div>
+      </MainContentContainer>
+    );
+
     expect(screen.getByText("Test Content")).toBeInTheDocument();
   });
 
   it("sets marginLeft to 0 when sidebar is expanded", () => {
-    vi.mocked(SidebarHooks.useSidebar).mockReturnValue({
+    mockUseSidebar.mockReturnValue({
       expanded: true,
-    } as never);
+      toggleSidebar: vi.fn(),
+    });
+    mockUseMediaQuery.mockReturnValue(false);
+
     const { container } = render(
-      <MainContentContainer>Content</MainContentContainer>
+      <MainContentContainer>
+        <div>Content</div>
+      </MainContentContainer>
     );
-    const stack = container.querySelector("[class*='MuiStack']");
+
+    const stack = container.firstChild;
     expect(stack).toHaveStyle({ marginLeft: "0" });
   });
 
-  it("sets negative marginLeft when sidebar is collapsed", () => {
-    vi.mocked(SidebarHooks.useSidebar).mockReturnValue({
+  it("sets marginLeft to 0 on phone regardless of expanded state", () => {
+    mockUseSidebar.mockReturnValue({
       expanded: false,
-    } as never);
+      toggleSidebar: vi.fn(),
+    });
+    mockUseMediaQuery.mockReturnValue(true);
+
     const { container } = render(
-      <MainContentContainer>Content</MainContentContainer>
+      <MainContentContainer>
+        <div>Content</div>
+      </MainContentContainer>
     );
-    const stack = container.querySelector("[class*='MuiStack']") as HTMLElement;
-    const computed = getComputedStyle(stack);
-    expect(computed.marginLeft).toMatch(/-\d+px/);
+
+    const stack = container.firstChild;
+    expect(stack).toHaveStyle({ marginLeft: "0" });
   });
 
-  it("applies transition style", () => {
-    vi.mocked(SidebarHooks.useSidebar).mockReturnValue({
-      expanded: true,
-    } as never);
+  it("sets marginLeft to negative sidebar width when desktop and collapsed", () => {
+    mockUseSidebar.mockReturnValue({
+      expanded: false,
+      toggleSidebar: vi.fn(),
+    });
+    mockUseMediaQuery.mockReturnValue(false);
+
     const { container } = render(
-      <MainContentContainer>Content</MainContentContainer>
+      <MainContentContainer>
+        <div>Content</div>
+      </MainContentContainer>
     );
-    const stack = container.querySelector("[class*='MuiStack']");
-    expect(stack).toHaveStyle({ transition: "margin-left 0.3s" });
+
+    const stack = container.firstChild;
+    expect(stack).toHaveStyle({ marginLeft: "-250px" });
   });
 });
