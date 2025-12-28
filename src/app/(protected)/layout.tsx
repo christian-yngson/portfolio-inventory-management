@@ -1,10 +1,10 @@
 import { ReactNode } from "react";
 import Header from "@/components/protected/Header";
 import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
 import Sidebar from "@/components/protected/Sidebar";
 import SidebarProvider from "@/components/protected/SidebarProvider";
 import MainContentContainer from "@/components/protected/MainContentContainer";
+import Container from "@mui/material/Container";
 
 interface Props {
   children: ReactNode;
@@ -17,7 +17,9 @@ function ProtectedLayout({ children }: Props) {
         <Sidebar />
         <MainContentContainer>
           <Header />
-          <Box component="main">{children}</Box>
+          <Container component="main" sx={{ padding: 3 }} maxWidth={false}>
+            {children}
+          </Container>
         </MainContentContainer>
       </Stack>
     </SidebarProvider>

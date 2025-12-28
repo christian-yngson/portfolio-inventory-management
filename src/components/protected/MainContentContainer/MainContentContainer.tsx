@@ -15,7 +15,14 @@ function MainContentContainer({ children }: Props) {
   const isPhone = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const marginLeft = isPhone || expanded ? 0 : `-${Ui.sidebarWidth}px`;
   return (
-    <Stack sx={{ flexGrow: 1, marginLeft, transition: "margin-left 0.3s" }}>
+    <Stack
+      sx={{
+        flexGrow: 1,
+        marginLeft,
+        transition: "margin-left 0.3s",
+        backgroundColor: "#f7f7f7",
+      }}
+    >
       {children}
     </Stack>
   );
