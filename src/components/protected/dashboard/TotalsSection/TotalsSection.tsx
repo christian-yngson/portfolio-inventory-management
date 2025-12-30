@@ -1,24 +1,16 @@
-import Stack from "@mui/material/Stack";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import { colors } from "@mui/material";
 import SectionCard from "./SectionCard";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import TrendingDownIcon from "@mui/icons-material/TrendingDown";
+import SectionContainer from "../SectionContainer";
 
 /* @TODO add test after API implementation */
 /* @TODO convert to suspense boundaries */
 function TotalsSection() {
   return (
-    <Stack
-      gap={2}
-      direction="row"
-      flexGrow={1}
-      flexWrap="wrap"
-      component="section"
-      role="region"
-      aria-label="totals overview"
-    >
+    <SectionContainer ariaLabel="totals overview">
       <SectionCard
         icon={
           <ShoppingBagIcon sx={{ fontSize: 26, color: colors.orange[500] }} />
@@ -50,7 +42,7 @@ function TotalsSection() {
         label="Total Expenses"
         color={colors.red[500]}
       />
-    </Stack>
+    </SectionContainer>
   );
 }
 
