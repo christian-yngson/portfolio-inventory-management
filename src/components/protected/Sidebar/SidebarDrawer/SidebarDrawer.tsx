@@ -28,8 +28,8 @@ function SidebarDrawer({ children }: Props) {
           transition: "width 0.3s",
         },
         position: {
-          xs: "fixed",
-          md: "relative",
+          xs: "absolute",
+          sm: "relative",
         },
       }}
       variant={isPhone ? "temporary" : "persistent"}
