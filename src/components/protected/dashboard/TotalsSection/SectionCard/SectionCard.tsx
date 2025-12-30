@@ -17,7 +17,13 @@ interface Props {
 function SectionCard({ icon, amount, label, color }: Props) {
   return (
     <Card
-      sx={{ borderRadius: 2, flexGrow: 1, backgroundColor: "white" }}
+      sx={{
+        borderRadius: 2,
+        flexGrow: 1,
+        backgroundColor: "white",
+        flexBasis: "23%",
+        minWidth: 250,
+      }}
       variant="outlined"
     >
       <CardContent>

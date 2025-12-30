@@ -1,5 +1,7 @@
 import { Metadata } from "next";
 import TotalsSection from "@/components/protected/dashboard/TotalsSection";
+import Stack from "@mui/material/Stack";
+import CountSection from "@/components/protected/dashboard/CountSection";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -7,7 +9,12 @@ export const metadata: Metadata = {
 };
 
 function Dashboardpage() {
-  return <TotalsSection />;
+  return (
+    <Stack gap={3}>
+      <TotalsSection />
+      <CountSection />
+    </Stack>
+  );
 }
 
 export default Dashboardpage;
